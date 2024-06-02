@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'home','Home')}"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<body>
+<div class="row mt-3">
+    <div class="col-3">
+    </div>
+    <div class="col-6">
+        <div id='calendar'></div>
+    </div>
+    <div class="col-3">
+    </div>
+</div>
+
+<script th:inline="javascript">
+    $(function () {
+        $('#calendar').fullCalendar({
+            defaultView: 'listDay',
+            contentHeight: "auto",
+            noEventsMessage: 'Unavailable',
+            validRange: function (nowDate) {
+                // Set the start of today and the start of tomorrow
+                var startOfToday = moment(nowDate).startOf('day');
+                var endOfTomorrow = moment(nowDate).add(2, 'days').startOf('day');
+
+                return {
+                    start: startOfToday,
+                    end: endOfTomorrow
+                };
+            },
+            header: {
+                left: 'title',
+                center: '',
+                right: 'today prev,next'
+            },
+            allDaySlot: false,
+            minTime: "06:00:00",
+            maxTime: "21:00:00",
+            firstDay: 2,
+            timeFormat: 'H:mm', // uppercase H for 24-hour clock
+            eventSources: [
+                {
+                    events: function (start, end, timezone, callback) {
+                        var url = [[${ '/api/availableHours/'+providerId + '/' + workId + '/' }]] + start.format('YYYY-MM-DD').toString();
+                        console.log(url);
+                        $.ajax({
+                            url: url,
+                            data: {},
+                            success: function (doc) {
+                                var now = moment();
+                                var events = doc.map(function (entry) {
+                                    var entryStart = moment(entry.start);
+                                    if (entryStart.isAfter(now)) {
+                                        var URL = [[${ '/appointments/new/'+providerId + '/' + workId + '/' }]] + entry.start;
+                                        entry.url = URL;
+                                        return entry;
+                                    }
+                                }).filter(function(event) {
+                                    return event != null;
+                                });
+                                callback(events);
+                            }
+                        });
+                    },
+                    color: 'white',
+                    textColor: 'black'
+                }
+            ],
+
+        });
+    });
+</script>
+</body>
+</html>

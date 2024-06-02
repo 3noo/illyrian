@@ -1,0 +1,36 @@
+<th:block th:fragment="navlinks(activeLink)">
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item " th:classappend="${activeLink} == 'home' ? 'active':''">
+                <a class="nav-link" th:href="@{/}">Home</a>
+            </li>
+            <li class="nav-item" th:classappend="${activeLink} == 'appointments' ? 'active':''">
+                <a class="nav-link" th:href="@{/appointments/all}">Appointments</a>
+            </li>
+            <li class="nav-item" th:classappend="${activeLink} == 'account' ? 'active':''">
+                <a class="nav-link" th:href="@{'/customers/' + ${#authentication.principal.id}}">My account</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav d-lg-none">
+            <li class="nav-item">
+                <form th:action="@{/perform_logout}" id="logout" method="POST">
+                    <a class="nav-link" href="#"
+                       onclick="document.getElementById('logout').submit(); return false;">Log out</a>
+                </form>
+            </li>
+        </ul>
+    </div>
+    <style>
+        @media (max-width: 991px) {
+            .d-lg-none {
+                display: block !important;
+            }
+        }
+
+        @media (min-width: 992px) {
+            .d-lg-none {
+                display: none !important;
+            }
+        }
+    </style>
+</th:block>

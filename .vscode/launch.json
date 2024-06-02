@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-AppointmentSchedulerApplication<appointmentscheduler>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.example.slabiak.appointmentscheduler.AppointmentSchedulerApplication",
+            "projectName": "appointmentscheduler",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

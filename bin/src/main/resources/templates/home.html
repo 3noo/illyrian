@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'home','Home')}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointment Calendar</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" rel="stylesheet" integrity="sha512-RY/gG6cgtGhEKNcGgUy78L2HnMR2MrDX0CR+FY7DD6kOExMcW+a2o1pYO3CHB6Hg15bd4WSPWjPq5byhKHohKg==" crossorigin="anonymous" />
+    <style>
+        .fc-toolbar h2 {
+            margin-top: 10px;
+        }
+        .fc-toolbar .fc-left, .fc-toolbar .fc-right {
+            margin-bottom: 10px;
+        }
+        .fc-view-container {
+            margin-top: 20px;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFN6EY7Blgl1rVJ/QyTdV+8kv7FbyPEe0zF8gFp60LCthO2jmK57PSPMyjntK9hKLL3keI+1nGq4iA==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js" integrity="sha512-Vj4Mm0Cx2bsGPGY56D/HtXCDUbXNRNEjveoyX07PYYkHTN/Pj6u2UHBp0xU6hXe8A7fPCnZD6t3cXU5bTjGHNw==" crossorigin="anonymous"></script>
+</head>
+
+<body>
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-12 text-center mb-4">
+            <h1 class="display-5">Your Appointment Calendar</h1>
+            <p class="lead">Manage your appointments easily and efficiently with our calendar view.</p>
+        </div>
+        <div class="col-12">
+            <div id='calendar'></div>
+        </div>
+    </div>
+</div>
+
+<script th:inline="javascript">
+    $(document).ready(function () {
+        $('#calendar').fullCalendar({
+            defaultView: 'agendaWeek',
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'month,agendaWeek,agendaDay'
+            },
+            allDaySlot: false,
+            minTime: "06:00:00",
+            maxTime: "22:00:00",
+            timeFormat: 'H:mm', // uppercase H for 24-hour clock
+            firstDay: 1,
+            eventSources: [
+                {
+                    url: /*[[${'/api/user/'+user.id+'/appointments'}]]*/ '/api/user/1/appointments',
+                    color: 'yellow',
+                    textColor: 'black'
+                }
+            ]
+        });
+    });
+</script>
+</body>
+
+</html>

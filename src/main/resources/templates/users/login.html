@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body}, '','Login form')}">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background: #f7f7f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding: 0 20px;
+        }
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .card-header {
+            background-color: #007bff;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-align: center;
+        }
+        .form-control {
+            border-radius: 5px;
+        }
+        .btn-success {
+            width: 100%;
+            border-radius: 5px;
+        }
+        .alert {
+            margin-bottom: 20px;
+        }
+        .input-group-text {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px 0 0 5px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-4">
+            <div class="text-center mb-4">
+                <h1 style="padding-top:45px">Welcome to Illyrian Barber Shop</h1>
+                <p class="lead">Manage your appointments effortlessly. Sign in to access your account and schedule your next visit with us.</p>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    Sign in
+                </div>
+                <div class="card-body">
+                    <form id="login-form" th:action="@{/perform_login}" method='POST'>
+                        <div th:if="${param.error != null}" class="alert alert-danger">
+                            Invalid username or password.
+                        </div>
+                        <div th:if="${createdUserName != null}" class="alert alert-success">
+                            <p>User <span th:text="${createdUserName}"></span> added!</p>
+                        </div>
+                        <div th:if="${param.logout != null}" class="alert alert-success">
+                            <p>Logged out successfully</p>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="glyphicon glyphicon-user"></i></span>
+                            </div>
+                            <input type="text" id="username" name="username" placeholder="Username" class="form-control">
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="glyphicon glyphicon-lock"></i></span>
+                            </div>
+                            <input type="password" id="password" name="password" placeholder="Password" class="form-control">
+                        </div>
+                        <button type="submit" class="btn btn-success">Login</button>
+                        <div class="mt-4 text-center">
+                            <p>Need an account?</p>
+                            <p>Create a new <a th:href="@{/customers/new/retail}">Retail</a> or <a th:href="@{/customers/new/corporate}">Corporate</a> account</p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

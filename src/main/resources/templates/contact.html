@@ -51,15 +51,15 @@
                                 <div class="main-menu f-right d-none d-lg-block">
                                     <nav>
                                         <ul id="navigation">
-                                            <li><a href="index.html">Home</a></li>
-                                            <li><a href="about.html">About</a></li>
-                                            <li><a href="blog.html">Blog</a></li>
-                                            <li class="active"><a href="contact.html">Contact</a></li>
+                                            <li class="active"><a th:href="@{/}">Home</a></li>
+                                            <li><a th:href="@{/about}">About</a></li>
+                                            <li><a th:href="@{/contact}">Contact</a></li>
                                         </ul>
                                     </nav>
                                 </div>
                                 <div class="header-right-btn f-right d-none d-lg-block ml-30">
-                                    <a href="from.html" class="btn header-btn">became a member</a>
+                                    <a th:href="@{/login}" class="btn header-btn">book an appointment</a>
+
                                 </div>
                             </div>
                         </div>   

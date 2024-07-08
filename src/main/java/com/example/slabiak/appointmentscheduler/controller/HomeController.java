@@ -23,6 +23,15 @@ public class HomeController {
         }
         return "index"; // Make sure 'index.html' is a valid template for your public home page
     }
+    @GetMapping("/about")
+    public String about() {
+        return "about";  // This will return the about.html Thymeleaf template
+    }
+
+    @GetMapping("/contact")
+    public String contact() {
+        return "contact";  // This will return the contact.html Thymeleaf template
+    }
 
     @GetMapping("/home")
     public String showHome(Model model, @AuthenticationPrincipal CustomUserDetails currentUser) {

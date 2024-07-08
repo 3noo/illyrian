@@ -1,93 +1,142 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body}, '','Login form')}">
+<html lang="en">
 <head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Illyrian Barber Shop - Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary-color: #D4AF37; /* Gold/bronze color for accents */
+            --secondary-color: #ffffff; /* White for text */
+            --background-color: #1E1E1E; /* Dark background, slightly lighter than pure black */
+            --text-color: #ffffff;
+            --input-background: rgba(255, 255, 255, 0.1); /* Slightly transparent white for input fields */
+            --input-border: #D4AF37;
+        }
+
         body {
-            background: #f7f7f7;
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            padding: 0 20px;
         }
-        .card {
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+        .container {
+            display: flex;
+            max-width: 1000px;
+            background: var(--background-color);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.1); /* Gold-tinted shadow */
+            border-radius: 20px;
+            overflow: hidden;
         }
-        .card-header {
-            background-color: #007bff;
-            color: white;
-            font-size: 1.5rem;
-            font-weight: bold;
-            text-align: center;
+
+        .logo-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
         }
-        .form-control {
-            border-radius: 5px;
+
+        .logo-container img {
+            max-width: 100%;
+            height: auto;
         }
-        .btn-success {
-            width: 100%;
-            border-radius: 5px;
+
+        .form-container {
+            flex: 1;
+            padding: 40px;
+            background-color: rgba(255, 255, 255, 0.05);
         }
-        .alert {
+
+        h1 {
+            color: var(--primary-color);
             margin-bottom: 20px;
         }
-        .input-group-text {
-            background-color: #007bff;
-            color: white;
+        a {
+            color: var(--primary-color)!important;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            background-color: var(--input-background);
             border: none;
-            border-radius: 5px 0 0 5px;
+            border-bottom: 2px solid var(--input-border);
+            color: var(--text-color);
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-bottom-color: var(--primary-color);
+        }
+
+        .input-group label {
+            position: absolute;
+            top: -20px;
+            left: 0;
+            font-size: 12px;
+            color: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .btn {
+            background: var(--primary-color);
+            color: var(--background-color);
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .btn:hover {
+            background: #B8860B;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            .logo-container {
+                padding: 20px;
+            }
         }
     </style>
 </head>
 <body>
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-6 col-lg-4">
-            <div class="text-center mb-4">
-                <h1 style="padding-top:45px">Welcome to Illyrian Barber Shop</h1>
-                <p class="lead">Manage your appointments effortlessly. Sign in to access your account and schedule your next visit with us.</p>
+    <div class="logo-container">
+        <img src="/img/logo.png" alt="Illyrian Barber Shop Logo">
+    </div>
+    <div class="form-container">
+        <h1>Welcome to Illyrian Barber Shop</h1>
+        <form id="login-form" action="/perform_login" method="POST">
+            <div class="input-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required autocomplete="username">
             </div>
-            <div class="card">
-                <div class="card-header">
-                    Sign in
-                </div>
-                <div class="card-body">
-                    <form id="login-form" th:action="@{/perform_login}" method='POST'>
-                        <div th:if="${param.error != null}" class="alert alert-danger">
-                            Invalid username or password.
-                        </div>
-                        <div th:if="${createdUserName != null}" class="alert alert-success">
-                            <p>User <span th:text="${createdUserName}"></span> added!</p>
-                        </div>
-                        <div th:if="${param.logout != null}" class="alert alert-success">
-                            <p>Logged out successfully</p>
-                        </div>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="glyphicon glyphicon-user"></i></span>
-                            </div>
-                            <input type="text" id="username" name="username" placeholder="Username" class="form-control">
-                        </div>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="glyphicon glyphicon-lock"></i></span>
-                            </div>
-                            <input type="password" id="password" name="password" placeholder="Password" class="form-control">
-                        </div>
-                        <button type="submit" class="btn btn-success">Login</button>
-                        <div class="mt-4 text-center">
-                            <p>Need an account?</p>
-                            <p>Create a new <a th:href="@{/customers/new/retail}">Retail</a> or <a th:href="@{/customers/new/corporate}">Corporate</a> account</p>
-                        </div>
-                    </form>
-                </div>
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required autocomplete="current-password">
             </div>
-        </div>
+            <button type="submit" class="btn">Login</button>
+        </form>
+        <p>Need an account? <a href="/customers/new/retail" style="color: var(--primary-color);">Sign up</a></p>
     </div>
 </div>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
